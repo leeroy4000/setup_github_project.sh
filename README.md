@@ -3,8 +3,8 @@
 # setup_github_project.sh
 
 A bootstrap script for creating or setting up individual GitHub projects.  
-This script handles both **new projects** (initializing a repo locally and creating it on GitHub)
-and **existing projects** (cloning and installing dependencies).  
+This script handles both **new projects** (initializing a repo locally and creating it
+on GitHub) and **existing projects** (cloning and installing dependencies).  
 New projects are created as **private by default** for security.
 
 ---
@@ -23,14 +23,16 @@ New projects are created as **private by default** for security.
 - **Existing project path**:
   - Asks for GitHub username and repo name.
   - Clones the repo (or pulls updates if already cloned).
-  - Installs dependencies from `requirements.txt` system‑wide using `pip --break-system-packages`.
+  - Installs dependencies from `requirements.txt` system‑wide using
+    `pip --break-system-packages`.
   - Prints a hint to open the project in VS Code.
 
 ---
 
 ## 🛠️ Requirements
 
-- GitHub CLI (`gh`) is required, but the script will install it automatically if missing.
+- GitHub CLI (`gh`) is required, but the script will install it automatically if
+  missing.
 - You must authenticate once with GitHub CLI:
   ```bash
   gh auth login
