@@ -10,6 +10,7 @@ New projects are created as **private by default** for security.
 
 ## 🚀 What the Script Does
 
+- Ensures the GitHub CLI (`gh`) is installed. If not, it installs it automatically.
 - Prompts whether this is a **new project** or an **existing project**.
 - **New project path**:
   - Asks for GitHub username, repo name, and description.
@@ -27,11 +28,8 @@ New projects are created as **private by default** for security.
 
 ## 🛠️ Requirements
 
-- GitHub CLI (`gh`) must be installed:
-  ```bash
-  sudo apt install gh -y
-  ```
-- Authenticate once:
+- GitHub CLI (`gh`) is required, but the script will install it automatically if missing.
+- You must authenticate once with GitHub CLI:
   ```bash
   gh auth login
   ```
