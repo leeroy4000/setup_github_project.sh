@@ -42,7 +42,29 @@ if [[ "$NEW_PROJECT" == "yes" ]]; then
   echo "🔗 Creating PRIVATE repo on GitHub via gh..."
   gh repo create "${GITHUB_USER}/${REPO_NAME}" --private --source=. --remote=origin --push
 
-  echo "✅ New private project created and pushed to GitHub!"
+  # --- Create VS Code workspace file ---
+  cat > "${WORK_DIR}/${REPO_NAME}.code-workspace" <<EOF
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "python.defaultInterpreterPath": "python3",
+    "editor.formatOnSave": true,
+    "files.exclude": {
+      "**/__pycache__": true,
+      "**/*.pyc": true
+    }
+  }
+}
+EOF
+
+  echo "💻 Launching VS Code..."
+  code "${WORK_DIR}/${REPO_NAME}.code-workspace"
+
+  echo "✅ New private project created, pushed, and opened in VS Code!"
 
 else
   # --- Existing project setup ---
@@ -72,8 +94,29 @@ else
     echo "⚠️ No requirements.txt found, skipping."
   fi
 
-  echo "💡 Open VS Code with:"
-  echo "   code $WORK_DIR"
+  # --- Create VS Code workspace file if missing ---
+  if [ ! -f "${WORK_DIR}/${REPO_NAME}.code-workspace" ]; then
+    cat > "${WORK_DIR}/${REPO_NAME}.code-workspace" <<EOF
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "python.defaultInterpreterPath": "python3",
+    "editor.formatOnSave": true,
+    "files.exclude": {
+      "**/__pycache__": true,
+      "**/*.pyc": true
+    }
+  }
+}
+EOF
+  fi
 
-  echo "✅ Existing project setup complete!"
+  echo "💻 Launching VS Code..."
+  code "${WORK_DIR}/${REPO_NAME}.code-workspace"
+
+  echo "✅ Existing project setup complete and opened in VS Code!"
 fi
