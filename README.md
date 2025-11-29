@@ -3,36 +3,36 @@
 # setup_github_project.sh
 
 A bootstrap script for creating or setting up individual GitHub projects.  
-This script handles both **new projects** (initializing a repo locally and creating it
-on GitHub) and **existing projects** (cloning and installing dependencies).  
-New projects are created as **private by default** for security.
+This script handles both **new projects** (initializing a repo locally and creating it on GitHub) and **existing projects** (cloning and installing dependencies).  
+New projects are created as **private by default** for security.  
+At the end of setup, the script automatically generates a VS Code workspace file and launches VS Code into it.
 
 ---
 
 ## 🚀 What the Script Does
 
-- Ensures the GitHub CLI (`gh`) is installed. If not, it installs it automatically.
+- Ensures the GitHub CLI (`gh`) is installed. If not, installs it automatically.
 - Prompts whether this is a **new project** or an **existing project**.
 - **New project path**:
   - Asks for GitHub username, repo name, and description.
   - Creates a local project directory.
   - Initializes Git, adds a README and `.gitignore`.
   - Commits the initial files and sets branch to `main`.
-  - Uses the GitHub CLI (`gh`) to create a **private repo** on GitHub, link it,
-    and push the initial commit.
+  - Uses the GitHub CLI (`gh`) to create a **private repo** on GitHub, link it, and push the initial commit.
+  - Generates a `.code-workspace` file with sensible defaults.
+  - Launches VS Code into the new workspace.
 - **Existing project path**:
   - Asks for GitHub username and repo name.
   - Clones the repo (or pulls updates if already cloned).
-  - Installs dependencies from `requirements.txt` system‑wide using
-    `pip --break-system-packages`.
-  - Prints a hint to open the project in VS Code.
+  - Installs dependencies from `requirements.txt` system‑wide using `pip --break-system-packages`.
+  - Generates a `.code-workspace` file if missing.
+  - Launches VS Code into the workspace.
 
 ---
 
 ## 🛠️ Requirements
 
-- GitHub CLI (`gh`) is required, but the script will install it automatically if
-  missing.
+- The script will install GitHub CLI (`gh`) automatically if missing.
 - You must authenticate once with GitHub CLI:
   ```bash
   gh auth login
@@ -74,16 +74,15 @@ setup_github_project.sh
 
 You’ll be prompted:
 
-- **New project (yes)** → Creates a private repo on GitHub and pushes the initial commit.  
-- **Existing project (no)** → Clones or updates the repo and installs dependencies.
+- **New project (yes)** → Creates a private repo on GitHub, pushes the initial commit, generates a workspace, and launches VS Code.  
+- **Existing project (no)** → Clones or updates the repo, installs dependencies, generates a workspace if missing, and launches VS Code.
 
 ---
 
 ## 📂 Workflow
 
 - Use this script **per project** to bootstrap or set up repos.  
-- Combine with `setup_github_environment.sh` (machine‑wide setup) for a complete
-  reproducible workflow.  
+- Combine with `setup_github_environment.sh` (machine‑wide setup) for a complete reproducible workflow.  
 - New projects default to **private**. You can change visibility later with:
   ```bash
   gh repo edit --visibility public
@@ -95,8 +94,6 @@ You’ll be prompted:
 
 - Each machine should already have an SSH key added to GitHub (see environment script).  
 - Dependencies are installed system‑wide with `pip --break-system-packages`.  
-- Developer tools (`black`, `flake8`, etc.) are installed globally via `pipx`
-  in the environment script.  
-- Designed for Debian/Ubuntu/Mint systems. Adjust package manager commands if using another
-  distro.
+- Developer tools (`black`, `flake8`, etc.) are installed globally via `pipx` in the environment script.  
+- Designed for Debian/Ubuntu/Mint systems. Adjust package manager commands if using another distro.
 ```
