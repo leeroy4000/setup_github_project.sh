@@ -1,3 +1,4 @@
+
 ```markdown
 # setup_github_project.sh
 
@@ -40,7 +41,28 @@ New projects are created as **private by default** for security.
 
 ---
 
-## ▶️ Usage
+## ▶️ Installation
+
+To make the script available system‑wide:
+
+1. Clone or download this repository.
+2. Make the script executable:
+   ```bash
+   chmod +x setup_github_project.sh
+   ```
+3. Move it into `/usr/local/bin`:
+   ```bash
+   sudo mv setup_github_project.sh /usr/local/bin/setup_github_project.sh
+   ```
+
+Now you can run the script from anywhere with:
+```bash
+setup_github_project.sh
+```
+
+---
+
+## 📂 Usage
 
 Run the script:
 
