@@ -3,6 +3,16 @@ set -e  # exit on error
 
 echo "🚀 GitHub Project Setup"
 
+# --- Ensure GitHub CLI is installed ---
+if ! command -v gh &> /dev/null; then
+  echo "📦 Installing GitHub CLI (gh)..."
+  sudo apt update
+  sudo apt install -y gh
+  echo "✅ GitHub CLI installed."
+else
+  echo "✅ GitHub CLI already installed."
+fi
+
 read -p "Is this a new project (yes/no)? " NEW_PROJECT
 
 if [[ "$NEW_PROJECT" == "yes" ]]; then
