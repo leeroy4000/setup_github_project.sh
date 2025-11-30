@@ -1,4 +1,3 @@
----
 
 ```markdown
 # setup_github_project.sh
