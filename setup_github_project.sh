@@ -91,4 +91,50 @@ else
     git pull
   else
     echo "📂 Cloning repo..."
-    git clone "$REPO_URL" "$WORK
+    git clone "$REPO_URL" "$WORK_DIR"
+    cd "$WORK_DIR"
+  fi
+
+  # --- Install Python dependencies (system-wide) ---
+  if [ -f "requirements.txt" ]; then
+    echo "🐍 Installing Python dependencies system-wide..."
+    python3 -m pip install -r requirements.txt --break-system-packages
+  else
+    echo "⚠️ No requirements.txt found, skipping."
+  fi
+
+  # --- Create VS Code workspace file if missing ---
+  if [ ! -f "${WORK_DIR}/${REPO_NAME}.code-workspace" ]; then
+    cat > "${WORK_DIR}/${REPO_NAME}.code-workspace" <<EOF
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "python.defaultInterpreterPath": "python3",
+    "editor.formatOnSave": true,
+    "files.exclude": {
+      "**/__pycache__": true,
+      "**/*.pyc": true
+    }
+  },
+  "extensions": {
+    "recommendations": [
+      "ms-python.python",
+      "ms-python.vscode-pylance",
+      "ms-toolsai.jupyter"
+    ]
+  }
+}
+EOF
+  fi
+
+  echo "💻 Launching VS Code..."
+  code "${WORK_DIR}/${REPO_NAME}.code-workspace"
+
+  echo "🔗 Repo linked to GitHub at $REPO_URL"
+  ssh -T git@github.com || true
+  echo "✅ Existing project setup complete and opened in VS Code!"
+fi
